@@ -1,0 +1,17 @@
+- hosts: localhost
+  roles:
+          - role: aws_ec2
+
+- hosts: tag_Name_KubeMaster
+  roles:
+          - role: k8s_master
+  become: True
+
+- hosts: tag_Name_KubeSlave1,tag_Name_KubeSlave2
+  vars_prompt:
+          - name: "token"
+            prompt: " Enter Token for slaves to join master: "
+            private: no
+  roles:
+          - role: k8s_worker 
+  become: True 
